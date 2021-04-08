@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no">
+    <title>浏览器定位</title>
+    <style>
+        html,body,#allmap{
+            height: 100%;
+            width: 100%;
+            overflow:hidden;
+            margin:0;
+            font-family: "微软雅黑";
+        }
+    </style>
+        <script src="http://api.map.baidu.com/api?v=2.0&ak=G6IzmAVocnvpp0LNcIiTm8MzmjBuLANF
+        	"></script>
+        	<body><div id="allmap"></div></body>
+    <script>
+        //百度地图API功能
+
+        /*命名空间：API使用BMap作为命名空间，所有类均在该命名空间之下。
+            比如：BMap.Map、BMap.Control、BMap.Overlay。
+        */
+
+        /*Map是地图API的核心类，用来实例化一个地图。
+        *构造函数：Map(container,opts)   在指定的容器内创建地图实例。
+        *之后需要调用Map.centerAndZoom()方法对地图进行初始化。未进行初始化的地图将不能进行任何操作。
+        */
+
+        /*centerAndZoom(center,zoom)        初始化地图
+        *注意：
+        *1.如果center类型为Point时，zoom必须赋值，范围3-19级。
+        *2.如果center类型为字符串时，，zoom可以忽略，地图将自动根据center适配最佳zoom级别。
+        */
+        var map = new BMap.Map("allmap");//创建地图实例
+
+        map.centerAndZoom(new BMap.Point(108.95309828,34.2777999),16);//初始化地图：设置中心点坐标和缩放级别
+
+        //Geolocation类：返回用户当前的位置。
+        //此方法利用浏览器的geolocation接口获取用户当前位置，不支持的浏览器将无法获取。
+        //构造函数：创建Geolocation对象实例
+        var geolocation = new BMap.Geolocation();
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        
+
+        /*Geolocation()构造函数的方法：
+        *getCurrentPosition()：该方法会返回用户当前位置。
+        *getStatus()：返回状态码。定位成功后返回的状态码为：BMAP_STATUS_SUCCESS。
+        *               如果为其他状态码表示不能获取您当前的位置。
+        */
+
+        /*当定位成功时，回调函数的参数为GeolocationResult对象，否则为null。
+        *GeolocationResult，该类作为Geolocation的getCurrentPosition方法的回调函数参数，不可实例化。
+        *GeolocationResult类所拥有的属性：point（返回定位成功后的结果，即当前位置的坐标点）
+        **/
+
+        geolocation.getCurrentPosition(function(result){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                /*Maker类表示地图上一个图像标注。
+                *构造函数：Maker(point: Point, opts: MarkerOptions)  创建一个图像标注实例。
+                *point参数指定了图像标注所在的地理位置；opts为可选参数。
+                */
+                var mk = new BMap.Marker(result.point);
+                /*核心类Map的方法：
+                *addOverlay——将覆盖物添加到地图中，一个覆盖物实例只能向地图中添加一次
+                *panTo——将地图的中心点更改为给定的点。
+                */
+                map.addOverlay(mk);
+                map.panTo(result.point);
+                /*Point类表示一个地理坐标点。
+                *构造函数：Point(lng,lat)    以指定的经度和纬度创建一个地理点坐标。
+                *该类有两个属性：lng 地理经度 lat 地理纬度
+                */
+                alert("您当前所在位置的经度是：" + result.point.lng + "，纬度是：" + result.point.lat);
+            }else{
+                alert("定位失败！" + this.getStatus());
+            }
+        });
+    </script>
+    </head>
+</html>

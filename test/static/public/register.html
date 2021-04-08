@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+    <title> 简单的用户注册表单实现 </title>
+    <style type="text/css">
+        a{color: #000000;font-size: 24px;}
+        fieldset
+        {
+            margin:20px auto;
+            width:600px;
+            height:250px;
+            padding:20px auto;
+            color:#000000;
+            text-align:center;
+        }
+        legend
+        {
+            color:#000000;
+            font-size:24px;
+            font-weight:bold;
+            text-align:center;
+        }
+    </style>
+	    </head>
+    <body>
+    	
+            <fieldset>
+                <legend align="center">毕业设计注册界面</legend>
+                <br><br>
+                 
+           
+                <label>手&nbsp;&nbsp;&nbsp;&nbsp;机&nbsp;&nbsp;&nbsp;&nbsp号：</label>
+                <input type="text"n value="" id="username" name="username"><br><br>
+                <label>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;码：</label>
+                <input type="password" value="" id="password" name="password"><br><br>
+               
+            
+                <!-- <label>请确认密码：</label>
+                <input type="password" name=""><br><br> -->
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button onclick="window.location.href='login.html'" type="button" id="return">返回</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button onclick="a()"id="register">注册</button>
+        
+		</fieldset>
+    <script language="javascript">
+      var btn=document.getElementById('register')
+
+  function a(){
+      var input1 = document.getElementById("username").value;
+      var input2=document.getElementById("password").value;
+      fly.post('/register', {
+      username: input1,
+      password: input2
+})
+.then(function (response) {
+  alert("注册成功！请返回登录页面")
+console.log(response);
+})
+.catch(function (error) {
+console.log(error);
+alert("注册失败！")
+});
+
+  };
+</script>
+    </body>
+</html>

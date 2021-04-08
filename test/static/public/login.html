@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/flyio/dist/fly.min.js"></script>
+	    </head>
+    <body>
+    	<head>
+        <title> 简单的用户登录表单实现 </title>
+        <style type="text/css">
+        	a{color: #000000;font-size: 24px;}
+            fieldset
+            {
+                margin:20px auto;
+                width:600px;
+                height:200px;
+                padding:20px auto;
+                color:#000000;
+                text-align:center;
+            }
+            legend
+            {
+                color:#000000;
+                font-size:24px;
+                font-weight:bold;
+                text-align:center;
+            }
+        </style>
+        </head>
+        <fieldset>
+                <legend align="center">毕业设计登录界面</legend>
+                <br><br>
+                <label>账&nbsp;&nbsp;&nbsp;号</label>
+                <input type="text" name="" id="username" ><br><br>
+                <label>密&nbsp;&nbsp;&nbsp;码</label>
+                <input type="password" name="" id="password" ><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button onclick=a() id="log">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button onclick="window.location.href='register.html'" type="button" id="return">注册</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </fieldset>
+        <script language="javascript">
+            var btn=document.getElementById("log")
+      
+        function a(){
+            var input1 = document.getElementById("username").value;
+            var input2=document.getElementById("password").value;
+            fly.post('/login', {
+            username: input1,
+            password: input2
+      })
+      .then(function (response) {
+    window.location.href='map.html';
+      console.log(response);
+      })
+      .catch(function (error) {
+      console.log(error);
+      alert("账号或密码错误")
+      });
+      
+        };
+      </script>
+    </body>
+</html>
